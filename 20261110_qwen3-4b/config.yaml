@@ -1,0 +1,60 @@
+assignments:
+- agent: vllm-model
+  task: alfworld-std
+- agent: vllm-model
+  task: webshop-std
+- agent: vllm-model
+  task: dbbench-std
+concurrency:
+  agent:
+    vllm-model: 8
+  task:
+    alfworld-std: 2
+    dbbench-std: 2
+    webshop-std: 2
+definition:
+  agent:
+    vllm-model:
+      module: src.client.agents.HTTPAgent
+      parameters:
+        body:
+          max_tokens: 2048
+          model: Qwen/Qwen3-4B
+          temperature: 0
+        headers:
+          Content-Type: application/json
+        name: vllm-model
+        prompter:
+          args:
+            agent_role: assistant
+          name: role_content_dict
+        return_format: '{response[choices][0][message][content]}'
+        url: http://localhost:8000/v1/chat/completions
+  task:
+    alfworld-std:
+      module: src.client.TaskClient
+      parameters:
+        config_path: src/server/tasks/alfworld/configs/base_config.yaml
+        controller_address: http://localhost:5020/api
+        data_path: /AgentBench/data/alfworld
+        max_step: 35
+        name: alfworld-std
+        prompts_path: src/server/tasks/alfworld/prompts/alfworld_multiturn_plan_first.json
+        split: standard
+    dbbench-std:
+      module: src.client.TaskClient
+      parameters:
+        concurrency: 1
+        controller_address: http://localhost:5020/api
+        data_file: data/dbbench/standard.jsonl
+        max_round: 15
+        name: dbbench-std
+    webshop-std:
+      module: src.client.TaskClient
+      parameters:
+        concurrency: 1
+        controller_address: http://localhost:5020/api
+        end: 200
+        name: webshop-std
+        start: 0
+output: outputs/2026-01-10-09-07-37
