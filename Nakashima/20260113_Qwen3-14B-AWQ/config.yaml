@@ -1,0 +1,100 @@
+assignments:
+- agent: vllm-model
+  task: dbbench-std
+- agent: vllm-model
+  task: alfworld-std
+- agent: vllm-model
+  task: os-std
+- agent: vllm-model
+  task: webshop-std
+concurrency:
+  agent:
+    vllm-model: 3
+  task:
+    alfworld-std: 6
+    dbbench-std: 1
+    os-std: 6
+    webshop-std: 1
+definition:
+  agent:
+    vllm-model:
+      module: src.client.agents.HTTPAgent
+      parameters:
+        body:
+          max_tokens: 512
+          model: Qwen/Qwen3-14B-AWQ
+          temperature: 0
+        headers:
+          Content-Type: application/json
+        name: vllm-model
+        prompter:
+          args:
+            agent_role: assistant
+          name: role_content_dict
+        return_format: '{response[choices][0][message][content]}'
+        url: http://localhost:8000/v1/chat/completions
+  task:
+    alfworld-std:
+      module: src.client.TaskClient
+      parameters:
+        config_path: src/server/tasks/alfworld/configs/base_config.yaml
+        controller_address: http://localhost:5020/api
+        data_path: /AgentBench/data/alfworld
+        max_step: 35
+        name: alfworld-std
+        prompts_path: src/server/tasks/alfworld/prompts/alfworld_multiturn_plan_first.json
+        split: s_4
+    dbbench-std:
+      module: src.client.TaskClient
+      parameters:
+        concurrency: 1
+        controller_address: http://localhost:5020/api
+        data_file: data/dbbench/s_150.jsonl
+        max_round: 15
+        name: dbbench-std
+    os-std:
+      module: src.client.TaskClient
+      parameters:
+        concurrency: 24
+        controller_address: http://localhost:5020/api
+        data_config:
+          bk: []
+          files:
+          - index_prefix: std-001-
+            problem_file: data/os_interaction/s_data/1/*.json
+            script_dir: data/os_interaction/scripts/1/
+          - index_prefix: std-002-
+            problem_file: data/os_interaction/s_data/2/*.json
+            script_dir: data/os_interaction/scripts/2/
+          - index_prefix: std-003-
+            problem_file: data/os_interaction/s_data/3/*.json
+            script_dir: data/os_interaction/scripts/3/
+          - index_prefix: std-004-
+            problem_file: data/os_interaction/s_data/4/*.json
+            script_dir: data/os_interaction/scripts/4/
+          - index_prefix: std-005-
+            problem_file: data/os_interaction/s_data/5/*.json
+            script_dir: data/os_interaction/scripts/5/
+          - index_prefix: std-006-
+            problem_file: data/os_interaction/s_data/6/*.json
+            script_dir: data/os_interaction/scripts/6/
+          - index_prefix: std-007-
+            problem_file: data/os_interaction/s_data/7/*.json
+            script_dir: data/os_interaction/scripts/7/
+          ignore: []
+        docker_config:
+          directory: data/os_interaction/res/dockerfiles
+          localhost: local-os
+        name: os-std
+        round_limit: 8
+        scripts:
+          directory: data/os_interaction/res/scripts
+    webshop-std:
+      module: src.client.TaskClient
+      parameters:
+        concurrency: 1
+        controller_address: http://localhost:5020/api
+        end: 100
+        name: webshop-std
+        start: 0
+output: outputs/2026-01-13-08-40-34
