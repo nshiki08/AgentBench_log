@@ -1,0 +1,24 @@
+{
+    "total": 74,
+    "validation": {
+        "running": 0.0,
+        "completed": 0.6486486486486487,
+        "agent context limit": 0.0,
+        "agent validation failed": 0.0,
+        "agent invalid action": 0.013513513513513514,
+        "task limit reached": 0.3108108108108108,
+        "unknown": 0.02702702702702703,
+        "task error": 0.0,
+        "average_history_length": 13.175675675675675,
+        "max_history_length": 23,
+        "min_history_length": 0
+    },
+    "custom": {
+        "overall": {
+            "total": 74,
+            "pass": 1,
+            "wrong": 73,
+            "acc": 0.013513513513513514
+        }
+    }
+}
