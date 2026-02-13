@@ -1,0 +1,71 @@
+{
+    "details": {
+        "vllm-model": {
+            "alfworld-std": {
+                "file": "/home/nshiki/AgentBench_Small_For_LLM2025/outputs/2026-02-12-05-24-21/vllm-model/alfworld-std/overall.json",
+                "overall": {
+                    "custom": {
+                        "overall": {
+                            "pass": 8,
+                            "success_rate": 0.16,
+                            "total": 50,
+                            "wrong": 42
+                        }
+                    },
+                    "total": 50,
+                    "validation": {
+                        "Completed": 0.16,
+                        "Context Limit Exceeded": 0.0,
+                        "Invalid Action": 0.82,
+                        "Invalid Format": 0.0,
+                        "Task Limit Exceeded": 0.02
+                    }
+                },
+                "time": "2026-02-12 05:45:58"
+            },
+            "dbbench-std": {
+                "file": "/home/nshiki/AgentBench_Small_For_LLM2025/outputs/2026-02-12-05-24-21/vllm-model/dbbench-std/overall.json",
+                "overall": {
+                    "custom": {
+                        "INSERT_accuracy": 0.13043478260869565,
+                        "SELECT_accuracy": 0.13114754098360656,
+                        "UPDATE_accuracy": 0.6,
+                        "aggregation-AVG_accuracy": 0.0,
+                        "aggregation-MAX_accuracy": 0.0,
+                        "aggregation-MIN_accuracy": 0.2,
+                        "aggregation-SUM_accuracy": 0.16666666666666666,
+                        "comparison_accuracy": 0.2222222222222222,
+                        "counting_accuracy": 0.09090909090909091,
+                        "other_accuracy": 0.2857142857142857,
+                        "overall_cat_accuracy": 0.2871941078641007,
+                        "ranking_accuracy": 0.1
+                    },
+                    "total": 150,
+                    "validation": {
+                        "Completed": 0.26666666666666666,
+                        "Context Limit Exceeded": 0.0,
+                        "Invalid Action": 0.0,
+                        "Invalid Format": 0.7333333333333333,
+                        "Task Limit Exceeded": 0.0
+                    }
+                },
+                "time": "2026-02-12 06:52:51"
+            }
+        }
+    },
+    "overall_scores": {
+        "vllm-model": {
+            "alf_score": 0.16,
+            "db_bench_score": 0.2871941078641007,
+            "overall_score": 1.72,
+            "w_alf": 0.07692307692307693,
+            "w_db": 0.07692307692307693
+        }
+    },
+    "summary": {
+        "vllm-model": {
+            "alfworld-std": 0.16,
+            "dbbench-std": 0.2871941078641007
+        }
+    }
+}
